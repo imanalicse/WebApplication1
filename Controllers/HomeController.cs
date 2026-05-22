@@ -14,24 +14,15 @@ namespace WebApplication1.Controllers
             var currentTime = DateTime.Now;
             var traceId = HttpContext.TraceIdentifier;
             var requestPath = Request.Path;
-            
+
             // Simulate some processing
             for (int i = 0; i < 5; i++)
             {
                 requestCount++;
             }
-            
-            // Create a model or data to pass to view using a named type so DebuggerDisplay is used
-            var debugInfo = new DebugInfo
-            {
-                AppName = appName,
-                RequestCount = requestCount,
-                CurrentTime = currentTime,
-                TraceId = traceId,
-                RequestPath = requestPath
-            };
 
-            return View(debugInfo);
+            // The view does not consume a model in this project. Avoid allocating DebugInfo and return the view directly.
+            return View();
         }
 
         public IActionResult Privacy()
