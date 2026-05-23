@@ -56,3 +56,10 @@ CodeCoverage/
 TestResult.xml
 nunit-*.xml
 .vs/
+
+# Ignore local SQLite database files created at runtime
+*.db
+*.db-shm
+*.db-wal
+/books.db
+/library.db

@@ -1,20 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using WebApplication1.Data;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
     public class BooksController : Controller
     {
+        private readonly ApplicationDbContext _db;
+
+        public BooksController(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
         public IActionResult Index()
         {
-            var books = new List<Book>
-            {
-                new Book { Id = 1, Title = "The Pragmatic Programmer", Author = "Andrew Hunt", Year = 1999, Tags = new[] { "programming", "software", "best-practices" } },
-                new Book { Id = 2, Title = "Clean Code", Author = "Robert C. Martin", Year = 2008, Tags = new[] { "programming", "clean-code", "architecture" } },
-                new Book { Id = 3, Title = "Design Patterns", Author = "Gamma et al.", Year = 1994, Tags = new[] { "patterns", "oop" } }
-            };
+            // Read books from the database
+            var books = _db.Books.ToList();
 
             // Serialize books to JSON and keep it in an object-typed local so you can open the JSON Visualizer while debugging.
             string booksJson = JsonSerializer.Serialize(books, new JsonSerializerOptions { WriteIndented = true });
